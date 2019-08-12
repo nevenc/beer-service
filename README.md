@@ -8,13 +8,45 @@ Demo project for Spring Boot Beer Lovers.
 ./mvnw clean package
 ```
 
+## Build Docker Container
+
+* By adding `Dockerfile` you can build the container image, e.g.
+
+```
+FROM adoptopenjdk/openjdk11:alpine-jre
+MAINTAINER Neven Cvetkovic <nevenc@pivotal.io>
+ARG JAR_FILE
+ADD ${JAR_FILE} /app.jar
+ENTRYPOINT ["/opt/java/openjdk/bin/java", "-jar", "/app.jar" ]
+```
+
+```
+docker build --build-arg JAR_FILE=target/beer-service-0.0.1-SNAPSHOT.jar -t nevenc/beer-service:0.0.1 -t nevenc/beer-service:latest .
+```
+
 ## Run Application
 
 ```
 java -jar target/beer-service-0.0.1-SNAPSHOT.jar
 ```
 
-## Deploy to Cloud
+## Run Application in local Docker
+
+```
+docker run -d -p 8080:8080 nevenc/beer-service/latest
+```
+
+## Push a container image to container registry
+
+* We are using Docker Hub as a container registry. You can use other container registries, e.g. GCR, Harbor, etc.
+
+```
+docker login
+docker push nevenc/beer-service:0.0.1
+docker push nevenc/beer-service:latest
+```
+
+## Deploy to Pivotal Application Service (PAS)
 
 * You can easily deploy this app to PAS (Pivotal Application Service) or a similar PaaS (Platform as a Service).
 
@@ -129,9 +161,9 @@ start command:   JAVA_OPTS="-agentpath:$PWD/.java-buildpack/open_jdk_jre/bin/jvm
   * number of instances
   * JDK version number
   * etc.
+
   
 ```
----
 applications:
 - name: beer-service
   memory: 1G
@@ -142,11 +174,64 @@ applications:
     JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ } }'
 ```
 
+## Deploy to Kubernetes (k8s)
 
+* You can deploy the container image to a Kubernetes cluster (e.g. PKS, GKE, Docker Kubernetes, etc)
+
+```
+kubectl run beer-service --image=nevenc/beer-service:0.0.1 --port=8080
+kubectl expose deployment beer-service --type=NodePort
+```
+
+```
+% kubectl get all                                                                                                             ✹
+NAME                                READY   STATUS    RESTARTS   AGE
+pod/beer-service-6987bb7944-n9x4t   1/1     Running   0          81s
+
+
+NAME                   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+service/beer-service   NodePort    10.102.170.54   <none>        8080:30645/TCP   3s
+service/kubernetes     ClusterIP   10.96.0.1       <none>        443/TCP          41h
+
+
+NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/beer-service   1/1     1            1           81s
+
+NAME                                      DESIRED   CURRENT   READY   AGE
+replicaset.apps/beer-service-6987bb7944   1         1         1       81s
+```
+
+* Take a note of the NodePort (if running local Kubernetes on your laptop), e.g.
+
+```
+% http localhost:30645                                                                                                    1 ↵ ✹
+HTTP/1.1 200 
+Content-Type: application/hal+json;charset=UTF-8
+Date: Mon, 12 Aug 2019 12:00:00 GMT
+Transfer-Encoding: chunked
+
+{
+    "_links": {
+        "beers": {
+            "href": "http://localhost:30645/beers{?page,size,sort}",
+            "templated": true
+        },
+        "profile": {
+            "href": "http://localhost:30645/profile"
+        }
+    }
+}
+```
+
+* If running on Pivotal Container Service (PKS with NSXT) or Google Cloud Enginer (GKE), or other public cloud providers - you could use an external load balancer, e.g.
+
+```
+kubectl expose deployment beer-service --type=LoadBalancer --port=80 --target-port=80
+```
 
 ## Rest Endpoints
 
-* You can use 'httpie' to test the REST endpoints, e.g. https://httpie.org/
+* Use 'httpie' to test the REST endpoints, e.g. https://httpie.org/
 * It's easy to install `httpie` client on Mac, e.g.
 
 ```

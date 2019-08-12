@@ -1,0 +1,9 @@
+---
+applications:
+- name: beer-service
+  memory: 1G
+  path: target/beer-service-0.0.1-SNAPSHOT.jar
+  # services:
+  #   - beer-service-db
+  env:
+    JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ } }'

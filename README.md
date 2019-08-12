@@ -2,10 +2,15 @@
 
 Demo project for Spring Boot Beer Lovers.
 
-## Build 
+## Build Application
 
 ```
 ./mvnw clean package
+```
+
+## Run Application
+
+```
 java -jar target/beer-service-0.0.1-SNAPSHOT.jar
 ```
 

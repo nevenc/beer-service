@@ -12,7 +12,7 @@
 	<artifactId>beer-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>beer-service</name>
-	<description>Demo project for Spring Boot - beer-service</description>
+	<description>Demo project for Spring Boot Beer lovers</description>
 
 	<properties>
 		<java.version>11</java.version>
@@ -60,7 +60,12 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>pl.project13.maven</groupId>
+				<artifactId>git-commit-id-plugin</artifactId>
+			</plugin>
 		</plugins>
+
 	</build>
 
 </project>

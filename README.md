@@ -153,7 +153,7 @@ applications:
 brew install httpie
 ```
 
-* Test the REST endpoints, e.g.
+* Test the BeerRepository REST endpoints, e.g.
 
 ```
 % http localhost:8080
@@ -232,3 +232,24 @@ Transfer-Encoding: chunked
 }
 ```
 
+* Test BeerInitializer endpoints
+
+```
+% http get localhost:8080/init                                                                          ✹
+HTTP/1.1 200 
+Content-Length: 20
+Content-Type: application/json;charset=UTF-8
+Date: Mon, 12 Aug 2019 12:00:00 GMT
+
+Created 10 record(s)
+```
+
+```
+% http get 'localhost:8080/init?count=100'                                                                           ✹
+HTTP/1.1 200 
+Content-Length: 21
+Content-Type: text/plain;charset=UTF-8
+Date: Mon, 12 Aug 2019 12:00:00 GMT
+
+Created 100 record(s)
+```

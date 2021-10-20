@@ -17,7 +17,7 @@ Demo project for Spring Boot Beer Lovers.
 
 ```
 ./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=nevenc/beer-service:latest
-./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=nevenc/beer-service:0.0.1-SNAPSHOT
+./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=nevenc/beer-service:1.0.0
 ```
 
 ## Build Docker Container Image (old way)
@@ -33,19 +33,19 @@ ENTRYPOINT ["/opt/java/openjdk/bin/java", "-jar", "/app.jar" ]
 ```
 
 ```
-docker build --build-arg JAR_FILE=target/beer-service-0.0.1-SNAPSHOT.jar -t nevenc/beer-service:0.0.1 -t nevenc/beer-service:latest .
+docker build --build-arg JAR_FILE=target/beer-service-1.0.0.jar -t nevenc/beer-service:1.0.0 -t nevenc/beer-service:latest .
 ```
 
 ## Run Application
 
 ```
-java -jar target/beer-service-0.0.1-SNAPSHOT.jar
+java -jar target/beer-service-1.0.0.jar
 ```
 
 ## Run Application in local Docker
 
 ```
-docker run -d -p 8080:8080 nevenc/beer-service:0.0.1-SNAPSHOT
+docker run -d -p 8080:8080 nevenc/beer-service:1.0.0
 ```
 
 ## Push a container image to container registry
@@ -54,7 +54,7 @@ docker run -d -p 8080:8080 nevenc/beer-service:0.0.1-SNAPSHOT
 
 ```
 docker login
-docker push nevenc/beer-service:0.0.1-SNAPSHOT
+docker push nevenc/beer-service:1.0.0
 docker push nevenc/beer-service:latest
 ```
 
@@ -75,7 +75,7 @@ Using manifest file /Users/user/workspace/beer-service/manifest.yml
 Getting app info...
 Creating app with these attributes...
 + name:       beer-service
-  path:       /Users/user/workspace/beer-service/target/beer-service-0.0.1-SNAPSHOT.jar
+  path:       /Users/user/workspace/beer-service/target/beer-service-1.0.0.jar
 + memory:     1G
   env:
 +   JBP_CONFIG_OPEN_JDK_JRE
@@ -179,7 +179,7 @@ start command:   JAVA_OPTS="-agentpath:$PWD/.java-buildpack/open_jdk_jre/bin/jvm
 applications:
 - name: beer-service
   memory: 1G
-  path: target/beer-service-0.0.1-SNAPSHOT.jar
+  path: target/beer-service-1.0.0.jar
   # services:
   #   - beer-service-db
   env:

@@ -188,7 +188,7 @@ applications:
 
 ## Deploy to Kubernetes (k8s)
 
-* You can deploy the container image to a Kubernetes cluster (e.g. PKS, GKE, Docker Kubernetes, etc)
+* You can deploy the container image to a Kubernetes cluster (e.g. TKG, GKE, Docker Kubernetes, etc)
 
 ```
 kubectl create deployment beer-service --image=nevenc/beer-service:latest

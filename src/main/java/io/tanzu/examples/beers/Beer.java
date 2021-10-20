@@ -1,4 +1,4 @@
-package io.pivotal.examples.beers;
+package io.tanzu.examples.beers;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

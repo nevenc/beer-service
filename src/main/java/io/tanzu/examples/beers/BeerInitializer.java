@@ -1,11 +1,12 @@
-package io.pivotal.examples.beers;
+package io.tanzu.examples.beers;
 
-import static com.github.javafaker.Faker.instance;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.stream.IntStream;
+
+import static com.github.javafaker.Faker.instance;
 
 @RestController
 public class BeerInitializer {

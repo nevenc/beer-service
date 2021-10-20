@@ -1,4 +1,4 @@
-package io.pivotal.examples.beers;
+package io.tanzu.examples.beers;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -8,7 +8,19 @@ Demo project for Spring Boot Beer Lovers.
 ./mvnw clean package
 ```
 
-## Build Docker Container
+## Build Docker Container Image
+
+* We can build an image using Cloud Native Buildpacks, ignoring the `Dockerfile` and its maintenance.
+* We can leverage Maven (or Gradle) plugins, but we do need a Docker daemon, either locally (same as before when building using `docker` and `Dockerfile`), or remotely using `DOCKER_HOST` environment variable.
+
+* Please tag the image using your own container registry (e.g. Docker Hub, Harbor, GCR, etc.), e.g.
+
+```
+./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=nevenc/beer-service:latest
+./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=nevenc/beer-service:0.0.1-SNAPSHOT
+```
+
+## Build Docker Container Image (old way)
 
 * By adding `Dockerfile` you can build the container image, e.g.
 
@@ -33,7 +45,7 @@ java -jar target/beer-service-0.0.1-SNAPSHOT.jar
 ## Run Application in local Docker
 
 ```
-docker run -d -p 8080:8080 nevenc/beer-service/latest
+docker run -d -p 8080:8080 nevenc/beer-service:0.0.1-SNAPSHOT
 ```
 
 ## Push a container image to container registry
@@ -42,7 +54,7 @@ docker run -d -p 8080:8080 nevenc/beer-service/latest
 
 ```
 docker login
-docker push nevenc/beer-service:0.0.1
+docker push nevenc/beer-service:0.0.1-SNAPSHOT
 docker push nevenc/beer-service:latest
 ```
 
@@ -179,7 +191,7 @@ applications:
 * You can deploy the container image to a Kubernetes cluster (e.g. PKS, GKE, Docker Kubernetes, etc)
 
 ```
-kubectl run beer-service --image=nevenc/beer-service:0.0.1 --port=8080
+kubectl run beer-service --image=nevenc/beer-service:latest --port=8080
 kubectl expose deployment beer-service --type=NodePort
 ```
 

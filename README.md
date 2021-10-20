@@ -191,8 +191,8 @@ applications:
 * You can deploy the container image to a Kubernetes cluster (e.g. PKS, GKE, Docker Kubernetes, etc)
 
 ```
-kubectl run beer-service --image=nevenc/beer-service:latest --port=8080
-kubectl expose deployment beer-service --type=NodePort
+kubectl create deployment beer-service --image=nevenc/beer-service:latest
+kubectl expose deployment beer-service --type=NodePort --port=8080
 ```
 
 ```
@@ -235,7 +235,7 @@ Transfer-Encoding: chunked
 }
 ```
 
-* If running on Pivotal Container Service (PKS with NSXT) or Google Cloud Enginer (GKE), or other public cloud providers - you could use an external load balancer, e.g.
+* If running on Tanzu Kubernetes Grid (TKG) or Google Cloud Engine (GKE), or other public cloud providers - you could use an external load balancer, e.g.
 
 ```
 kubectl expose deployment beer-service --type=LoadBalancer --port=80 --target-port=80
